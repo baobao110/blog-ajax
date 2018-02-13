@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.inter.BlogDAO">
+	<delete id="delete">
+		delete from blog where number=#{number}
+	</delete>
+
+	<select id="Get" resultType="com.blog.Blog"> 
+		select username,createtime,number,total,password from  blog where number=#{number} and password=#{password}
+	</select>
+	<select id="GetBog" resultType="com.blog.Blog"> 
+		select * from blog where number=#{number}
+	</select>
+	<select id="GetBlog" resultType="com.blog.Blog"> 
+		select * from  blog where number=#{number} and password=#{password}
+	</select>
+	<update id="modifyPassword">
+		update  blog set password=#{newPassword},modifytime=now() where number=#{number}
+	</update>
+	<!-- <update id="modifyMoney">
+		update card set money=#{money},modifytime=now() where number=#{number}
+	</update> -->
+	<insert id="open" useGeneratedKeys="true" keyProperty="id">
+		insert  blog (number,password,total,createtime,username) value (#{number},#{password},#{total},now(),#{username})
+	</insert>
+	<select id="List" resultType="com.blog.Blog">
+  	select * from  blog where  number=#{number} limit #{currentNumber},#{move}
+  </select>
+  <select id="list" resultType="com.blog.Blog">
+  	select * from  blog where username=#{username} limit #{currentNumber},#{move}
+  </select>
+  <select id="totalNumber" resultType="int">
+  		select count(*) from  blog  where number=#{number}
+  	</select>
+  	<select id="total" resultType="int">
+  		select count(*) from  blog  where username=#{username}
+  	</select>
+  	<update id="add">
+  		update blog set total=#{total} where number=#{number};
+  	</update>
+</mapper>
+
